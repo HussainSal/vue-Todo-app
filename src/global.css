@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --color-primary: #3993c8;
+  --color-primary-hover: #4ea8de;
+  --color-secondary: #5e60ce;
+  --color-secondary-hover: #8284fa;
+
+  /* grey */
+  --color-grey1: #0d0d0d;
+  --color-grey2: #1a1a1a;
+  --color-grey3: #262626;
+  --color-grey4: #333333;
+  --color-grey5: #808080;
+  --color-grey6: #d9d9d9;
+  --color-grey7: #f2f2f2;
+
+  --color-delete: #e25858;
+}
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%; /*1rem=10px*/
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  scroll-behavior: smooth;
+  font-size: 1.6rem;
+  color: var(--color-grey7);
+  background-color: var(--color-grey2);
+}
