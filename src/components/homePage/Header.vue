@@ -8,7 +8,7 @@
           </h1>
           <router-link
             to="/todo"
-            class="shadow-lg bg-[var(--color-primary)] text-[2.4rem] rounded-[8px] font-[500] py-[0.7rem] px-[2.9rem] inline-block"
+            class="shadow-lg hover:bg-[var(--color-primary-hover)] bg-[var(--color-primary)] text-[2.4rem] rounded-[8px] font-[500] py-[0.7rem] px-[2.9rem] inline-block"
           >
             Get started
           </router-link>

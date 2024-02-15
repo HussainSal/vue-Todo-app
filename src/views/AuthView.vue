@@ -123,7 +123,7 @@
                 >Forget password?</router-link
               >
               <button
-                class="block shadow-md px-[5rem] py-[1.5rem] bg-[var(--color-primary)] text-[#fff] text-[1.8rem] rounded-[8px] mt-[4rem]"
+                class="block shadow-md hover:bg-[var(--color-primary-hover)] px-[5rem] py-[1.5rem] bg-[var(--color-primary)] text-[#fff] text-[1.8rem] rounded-[8px] mt-[4rem]"
               >
                 {{ query === "login" ? "Sign In" : "Register" }}
               </button>
@@ -194,6 +194,7 @@ export default defineComponent({
 
   methods: {
     changeHandler() {
+      console.log("hi");
       this.query = String(this.$route.query.mode);
     },
 

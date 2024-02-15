@@ -45,7 +45,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.auth && isAuth()) {
+  if (to.meta.auth && !isAuth()) {
     return next("/userAuth?mode=login");
   } else {
     next();

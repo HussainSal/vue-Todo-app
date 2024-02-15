@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -7,13 +8,25 @@ import {
 import { auth } from "@/config/firebase";
 
 export const isAuth = (): string | null => {
-  const isAuth = localStorage.getItem("isAuth");
+  const isAuth = localStorage.getItem("user");
   return isAuth;
 };
 
-const setUserId = (id: string) => {
-  localStorage.setItem("uid", id);
+const setUserId = (user: { username: string; emailId: string }) => {
+  const JSONuser = JSON.stringify(user);
+  localStorage.setItem("user", JSONuser);
 };
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    setUserId({
+      username: String(user.displayName),
+      emailId: String(user.email),
+    });
+  } else {
+    localStorage.removeItem("user");
+  }
+});
 
 export const signUp = async (userCred: {
   email: string;
@@ -28,6 +41,10 @@ export const signUp = async (userCred: {
     );
 
     await updateProfile(res.user, { displayName: userCred.username });
+    setUserId({
+      username: String(res.user.displayName),
+      emailId: String(res.user.email),
+    });
 
     return res;
   } catch (error) {
@@ -42,8 +59,21 @@ export const signIn = async (userCred: { email: string; password: string }) => {
       userCred.email,
       userCred.password
     );
+    setUserId({
+      username: String(res.user.displayName),
+      emailId: String(res.user.email),
+    });
     return res;
   } catch (error) {
     throw error;
+  }
+};
+
+export const signOutFunc = async () => {
+  try {
+    await signOut(auth);
+    localStorage.removeItem("user");
+  } catch (error) {
+    return error;
   }
 };
