@@ -46,13 +46,16 @@ import userSvg from "@/assets/user.svg";
 import logoutSvg from "@/assets/logout.svg";
 import user2Svg from "@/assets/user2.svg";
 import { signOutFunc } from "@/util/isAuth";
+import { useAuthStore } from "@/store/login";
 
 export default defineComponent({
   setup() {
+    const auth = useAuthStore();
     const signOutHandler = async () => {
       await signOutFunc();
+      auth.logout();
     };
-    return { userSvg, logoutSvg, user2Svg, signOutHandler };
+    return { userSvg, logoutSvg, user2Svg, signOutHandler, auth };
   },
 });
 </script>

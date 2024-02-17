@@ -5,7 +5,8 @@
         <router-link to="/">
           <img :src="logo" alt="Todo" class="w-[100%]" />
         </router-link>
-        <div class="space-x-[2.6rem] text-[2rem]" v-if="!isAuth()">
+        {{ auth.isLoggedIn }}
+        <div class="space-x-[2.6rem] text-[2rem]" v-if="!auth.isLoggedIn">
           <router-link
             to="/userAuth?mode=login"
             class="shadow-lg hover:bg-[var(--color-secondary-hover)] bg-[var(--color-secondary)] text-[2.4rem] rounded-[10px] font-[500] py-[0.7rem] px-[2.9rem] inline-block"
@@ -19,7 +20,7 @@
             Sign Up
           </router-link>
         </div>
-        <div class="relative" v-if="isAuth()">
+        <div class="relative" v-if="auth.isLoggedIn">
           <button
             type="button"
             class="flex items-center text-[2rem]"
@@ -52,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, inject } from "vue";
 import logo from "@/assets/todoLogo.svg";
 import Container from "../ContainerBox.vue";
 
@@ -60,12 +61,13 @@ import arrDown from "@/assets/arrowDown.svg";
 import userSvg from "@/assets/user.svg";
 import UserMenu from "../UserMenu.vue";
 import { isAuth } from "@/util/isAuth";
+import { useAuthStore } from "@/store/login";
 
 export default defineComponent({
   components: { Container, UserMenu },
   setup() {
     const userMenu = ref(false);
-
+    const auth = useAuthStore();
     const userMenuHandler = () => {
       userMenu.value = !userMenu.value;
     };
@@ -73,6 +75,9 @@ export default defineComponent({
       if (e.key === "Escape") userMenu.value = false;
     };
 
+    const userLoggedin = inject<boolean>("loggedin");
+
+    console.log(userLoggedin, "userLoggedin");
     return {
       logo,
       userSvg,
@@ -81,6 +86,8 @@ export default defineComponent({
       userMenuHandler,
       closeUserMenuHandler,
       isAuth,
+      userLoggedin,
+      auth,
     };
   },
 });

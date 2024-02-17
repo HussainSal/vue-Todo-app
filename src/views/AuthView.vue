@@ -136,11 +136,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, provide } from "vue";
 import Container from "@/components/ContainerBox.vue";
 import { useRoute } from "vue-router";
 import { signIn, signUp } from "@/util/isAuth";
 import Loader from "@/assets/Loader.vue";
+import { useAuthStore } from "@/store/login";
 
 type InputVal = {
   val: string;
@@ -152,6 +153,7 @@ export default defineComponent({
   components: { Container, Loader },
   setup() {
     const route = useRoute();
+
     const query = ref<string>(String(route.query.mode));
     const userName = ref<InputVal>({
       val: "",
@@ -160,7 +162,7 @@ export default defineComponent({
     });
     const loading = ref(false);
     const isError = ref({ error: false, errorMessage: "" });
-
+    const userValue = ref<any>();
     const email = ref<InputVal>({
       val: "",
       isValid: null,
@@ -172,6 +174,7 @@ export default defineComponent({
       isValid: null,
       isTouched: false,
     });
+    const auth = useAuthStore();
 
     return {
       query,
@@ -180,6 +183,7 @@ export default defineComponent({
       password,
       loading,
       isError,
+      auth,
     };
   },
   watch: {
@@ -260,6 +264,10 @@ export default defineComponent({
             email: this.email.val,
             password: this.password.val,
           });
+
+          console.log(res, "RESPONSE");
+          //  auth.login(user)
+          this.auth.login();
           this.$router.push("/todo");
         }
       } catch (error: any) {
